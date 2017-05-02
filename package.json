@@ -1,0 +1,19 @@
+{
+  "name": "colloction",
+  "version": "0.0.0",
+  "description": "Sam's collection.",
+  "main": "server.js",
+  "author": "Sam",
+  "dependencies": {
+    "angular-ui-router": "*",
+    "body-parser": "*",
+    "connect-multiparty": "^2.0.0",
+    "express": "*",
+    "method-override": "*",
+    "mongoose": "*",
+    "morgan": "*"
+  },
+  "devDependencies": {
+    "mockserver-grunt": "^1.0.33"
+  }
+}

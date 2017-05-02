@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="angular.min.js"></script>
+  <script src="angular-ui-router.js"></script>
+  <script src="ng-file-upload-all.min.js"></script>
+  <script src="core.js"></script>
+  <script src="jquery-3.2.1.slim.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <title>Sam's Collection</title>
+
+
+
+
+  <!-- Custom styles for this template -->
+  <link href="starter-template.css" rel="stylesheet">
+
+
+</head>
+
+<body ng-app="sam">
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Collection</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#!/home">Home</a></li>
+          <li><a href="#!/games">Game</a></li>
+          <li><a href="#!/photo">Photo</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="col-md-10 col-md-offset-1">
+      <ui-view></ui-view>     
+    </div>
+    
+
+  </div><!-- /.container -->
+  <script type="text/ng-template" id="/home.html">
+  <div class="row">
+  <div class="page-header">
+  <h1>Home</h1>
+
+  </div>
+  </div>
+  <div class="row">
+   <div class="dropdown">
+  <button  class="btn btn-default dropdown-toggle" type="button" id="homepagesort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Sort by<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="homepagesort">
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+  </ul>
+  </div>
+  </div>
+  </script> 
+
+  <script type="text/ng-template" id="/games.html">
+
+
+  <div class="row">
+  
+
+  <div class="jumbotron">
+  <h1>Game</h1>
+   <p>This is collection of the game I have played before.</p>
+  </div>
+  <div class="btn-group pull-right">
+  <button  class="btn btn-default dropdown-toggle" type="button" id="gamepagesort"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort by<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="homepagesort" >
+    <li ng-click="sortBy('name')">Name</li>
+    <li ng-click="sortBy('date')">Date</li>
+    
+  </ul>
+
+  </div>
+ 
+  </div>
+  <ul class="list-group">  
+  <div ng-repeat="game in games | orderBy: by">  
+  <li class="list-group-item">
+  <div class="row">
+  <div class="col-md-4">
+  <a href="#!/games/{{game._id}}"><img class="img-thumbnail" ng-src="/game/{{game.post}}"></a>
+
+  </div>
+  <div class="col-md-8 text-center">  
+  <div>
+  <span style="font-size:20px;">
+
+  {{game.name}}         
+
+  </span>
+  </div>
+  <div>
+  <span ng-bind="game.date | date:'MM/dd/yyyy'" style="font-size:20px;">       
+  </span>
+  </div>
+  </div>
+  </div>
+  </li>
+  </div>
+
+  <div id="game-form" class="row">
+  <div class="page-header">
+  <h1>New Game</h1>
+
+  </div>
+
+  <div >
+  <form>
+  <div class="form-group row">
+  <label  class="col-md-2 col-form-label">Name</label>
+  <div class="col-md-10">
+  <input class="form-control" type="text" name="name" ng-model="formData.name">
+  </div>
+  </div>  
+  <div class="form-group row">
+  <label  class="col-md-2 col-form-label">Date</label>
+  <div class="col-md-10">
+  <input class="form-control" type="date" name="date" ng-model="formData.date">
+  </div>
+  </div>   
+  <div class="form-group row">
+  <label class="col-md-2 col-form-label">Post</label>
+  <div class="col-md-10">
+  <input class="form-control" type="file" name="post" ngf-select ng-model="picFile">
+  </div>
+  </div>          
+  <button type="submit" class="btn btn-primary btn-lg" ng-click="newGame(picFile)">Add</button>
+   <span class="progress" ng-show="picFile.progress >= 0">
+        <div style="width:{{picFile.progress}}%" 
+            ng-bind="picFile.progress + '%'"></div>
+      </span>
+      <span ng-show="picFile.result">Upload Successful</span>
+      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+  </form>
+  </div>
+  </div>
+
+  </script>
+ <script type="text/ng-template" id="/games/description.html">
+  
+  <article>
+    <h2><a href="singlepost.html">Aries Sun Sign March 21 - April 19</a></h2>
+ 
+    <div class="row">
+        <div class="group1 col-sm-6 col-md-6">
+            <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
+                     <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
+                <a href="#">Fire</a>, <a href="#">Mars</a>
+        </div>
+        <div class="group2 col-sm-6 col-md-6">
+                <span class="glyphicon glyphicon-pencil"></span> <a href="singlepost.html#comments">20 Comments</a>
+                  <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+        </div>
+    </div>
+ 
+    <hr>
+ 
+    <img src="http://placehold.it/900x300" class="img-responsive">
+ 
+    <br />
+ 
+    
+ 
+    <hr>
+</article>
+  
+  </script> 
+</body>
+</html>
